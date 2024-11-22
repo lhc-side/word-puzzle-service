@@ -1,0 +1,1 @@
+insert into puzzle_templates(id, contents, created_by, updated_by) values (1, 'test', 'test', 'test');

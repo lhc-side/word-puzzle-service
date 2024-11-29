@@ -4,7 +4,7 @@ import com.sususu.wordpuzzle.presentation.response.PuzzleTemplateResponse
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "puzzle_templates")
+@Table(name = "puzzle_template")
 data class PuzzleTemplate(
     @Id
     @Column(name = "id")
@@ -12,7 +12,10 @@ data class PuzzleTemplate(
     val id: Long? = null,
 
     @Column(name = "contents")
-    val contents: String
+    val contents: String,
+
+    @OneToMany
+    val puzzles: List<Puzzle>
 
 ) {
     fun toResponse(): PuzzleTemplateResponse {

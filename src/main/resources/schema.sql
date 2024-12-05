@@ -1,4 +1,4 @@
-create table words
+create table if not exists words
 (
     id          bigint auto_increment primary key,
     word        varchar(50)   not null comment '낱말',
@@ -10,7 +10,7 @@ create table words
     updated_at  timestamp     not null default now() comment '수정시간'
 );
 
-create table puzzle_words
+create table if not exists  puzzle_words
 (
     id         bigint auto_increment primary key,
     puzzle_id  bigint       not null comment '퍼즐id',
@@ -24,7 +24,7 @@ create table puzzle_words
     updated_at timestamp    not null default now() comment '수정시간'
 );
 
-create table puzzles
+create table if not exists  puzzles
 (
     id          bigint auto_increment primary key,
     template_id bigint       not null comment '템플릿id',
@@ -35,7 +35,7 @@ create table puzzles
     updated_at  timestamp    not null default now() comment '수정시간'
 );
 
-create table puzzle_templates
+create table if not exists  puzzle_templates
 (
     id         bigint auto_increment primary key,
     contents   text         not null comment '템플릿',
@@ -46,7 +46,7 @@ create table puzzle_templates
     updated_at timestamp    not null default now() comment '수정시간'
 );
 
-create table puzzle_submissions
+create table if not exists  puzzle_submissions
 (
     id         bigint auto_increment primary key,
     puzzle_id  bigint       not null comment '퍼즐id',
@@ -57,4 +57,3 @@ create table puzzle_submissions
     updated_by varchar(100) not null comment '수정자',
     updated_at timestamp    not null default now() comment '수정시간'
 );
-

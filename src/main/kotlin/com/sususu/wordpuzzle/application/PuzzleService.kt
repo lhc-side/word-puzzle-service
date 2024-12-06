@@ -1,8 +1,11 @@
 package com.sususu.wordpuzzle.application
 
+import com.sususu.wordpuzzle.infrastructure.Puzzle
+import com.sususu.wordpuzzle.infrastructure.Quiz
 import com.sususu.wordpuzzle.infrastructure.repository.PuzzleRepository
 import com.sususu.wordpuzzle.infrastructure.repository.PuzzleTemplateRepository
 import com.sususu.wordpuzzle.presentation.response.PuzzleResponse
+import com.sususu.wordpuzzle.presentation.response.QuizResponse
 import org.springframework.stereotype.Service
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
@@ -137,14 +140,28 @@ class PuzzleService(
         }
         return WordCounter(pq, i)
     }
-}
-
 
     @Transactional(readOnly = true)
-    fun findPuzzle(id: Long?): PuzzleResponse {
+    fun findPuzzle(id: Long): PuzzleResponse {
         // todo: random key with null situation
-        val puzzleId = id ?: 1L
+        val puzzleId = if (id == -1L) 1L else id
 
-        return PuzzleMapper.toResponse(puzzleRepository.findPuzzleById(puzzleId))
+        return puzzleRepository.findPuzzleById(puzzleId).toResponse()
+    }
+
+    fun Puzzle.toResponse(): PuzzleResponse {
+        return PuzzleResponse(
+            puzzleId = this.id,
+            template = this.puzzleTemplateContents,
+            quizzes = this.quizzes.map { it.toResponse() }
+        )
+    }
+
+    fun Quiz.toResponse(): QuizResponse {
+        return QuizResponse(
+            quizType = this.quizType,
+            quizNo = this.quizNo,
+            quiz = this.wordDescription
+        )
     }
 }

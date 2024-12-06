@@ -1,4 +1,4 @@
 ### GET puzzle
-GET http://localhost:8080/puzzle?id=10
+GET http://localhost:8080/puzzles/1
 Accept: application/json
 

@@ -5,7 +5,6 @@ import com.sususu.wordpuzzle.infrastructure.Puzzle
 import com.sususu.wordpuzzle.infrastructure.QPuzzle.puzzle
 import com.sususu.wordpuzzle.infrastructure.QPuzzleTemplate.puzzleTemplate
 import org.springframework.stereotype.Repository
-import java.util.NoSuchElementException
 
 @Repository
 class PuzzleRepositoryImpl(
@@ -13,7 +12,7 @@ class PuzzleRepositoryImpl(
 ) : PuzzleRepositoryCustom {
     override fun findPuzzleById(id: Long): Puzzle {
         return queryFactory.selectFrom(puzzle)
-            .join(puzzle.puzzleTemplate, puzzleTemplate)
+            .join(puzzle.puzzleTemplate, puzzleTemplate).fetchJoin()
             .where(puzzle.id.eq(id))
             .fetchOne()
             ?: throw NoSuchElementException("Puzzle Not Found")

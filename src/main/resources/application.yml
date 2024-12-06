@@ -18,11 +18,14 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        hbm2ddl:
-          auto: none
+        hbm2ddl.auto: none
+        default_batch_fetch_size: 30
+        jdbc.batch_size: 30
+        hibernate.physical_naming_strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
 
 logging:
   level:
-    org.hibernate.SQL: debug
-    org.hibernate.type.descriptor.sql.BasicBinder: trace
+    org.hibernate.orm.jdbc.bind: TRACE
+    org.hibernate.SQL: DEBUG
+
 ---

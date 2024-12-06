@@ -14,7 +14,9 @@ data class Puzzle(
     @JoinColumn(name = "template_id")
     val puzzleTemplate: PuzzleTemplate,
 
-    @OneToMany
+    @OneToMany(mappedBy = "puzzle")
     val quizzes: List<Quiz>,
-
-)
+) {
+    val puzzleTemplateContents: String
+        get() = puzzleTemplate.contents
+}

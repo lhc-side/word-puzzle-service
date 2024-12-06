@@ -35,7 +35,7 @@ create table puzzle
     updated_at  timestamp    not null default now() comment '수정시간'
 );
 
-create table puzzle_templates
+create table puzzle_template
 (
     id         bigint auto_increment primary key,
     contents   text         not null comment '템플릿',

@@ -23,6 +23,7 @@ data class Quiz(
 
     @Column
     val quizNo: String,
-
-
-)
+) {
+    val wordDescription: String
+        get() = word.description
+}

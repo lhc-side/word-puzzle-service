@@ -16,6 +16,6 @@ data class Word(
     @Column
     val description: String,
 
-    @OneToMany
+    @OneToMany(mappedBy = "word")
     val quizzes: List<Quiz>
 )

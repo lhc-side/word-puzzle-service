@@ -17,4 +17,3 @@ data class PuzzleTemplate(
     val puzzles: List<Puzzle>
 
 )
-

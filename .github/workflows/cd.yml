@@ -25,6 +25,9 @@ jobs:
       - name: Set Date Variable
         run: echo "CURRENT_DATE=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
 
+      - name: Build with Gradle
+        run: ./gradlew build
+      
       - name: Upload JAR to EC2
         uses: appleboy/scp-action@v0.1.7
         with:

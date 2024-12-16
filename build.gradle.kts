@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.sususu"
-version = "0.0.1-SNAPSHOT"
+version = ""
 
 java {
     toolchain {

@@ -2,8 +2,10 @@ package com.sususu.wordpuzzle.client.service
 
 import com.sususu.wordpuzzle.client.dto.SearchDictionaryRequest
 import com.sususu.wordpuzzle.client.dto.SearchDictionaryResponse
+import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestClient
+import kotlin.reflect.full.memberProperties
 
 interface DictionaryApiService {
     fun searchDictionary(searchDictionaryRequest: SearchDictionaryRequest): SearchDictionaryResponse
@@ -15,28 +17,19 @@ class DictionaryApiServiceImpl(
 ): DictionaryApiService {
     override fun searchDictionary(searchDictionaryRequest: SearchDictionaryRequest): SearchDictionaryResponse {
         val param = searchDictionaryRequest.toQueryParam()
-        var responseSpec = restClient.get()
-            .uri(param)
+        val responseSpec = restClient.get()
+            .uri("?${param}")
+            .accept(MediaType.APPLICATION_XML)
             .retrieve()
 
+        val body = responseSpec.toEntity(SearchDictionaryResponse::class.java)
         TODO("")
     }
+
     fun SearchDictionaryRequest.toQueryParam(): String {
-        return this::class.members
-            .filter { it.name != "copy" && it.name != "equals" && it.name != "hashCode" && it.name != "toString" }
-            .filter { it.call(this) != null } // null인 필드 제외
-            .joinToString("&") { member ->
-                val key = member.name
-                val value = member.call(this).toString()
-                "${key}=${value}"
-            }
+        return this::class.memberProperties
+            .filter { it.call(this) != null }
+            .joinToString("&") { "${it.name}=${it.call(this).toString()}" }
     }
 
-//    fun SearchDictionaryRequest.toQueryParam(): String {
-//        return this::class.members
-//            .filter { it.call(this) != null }
-//            .joinToString("&") {
-//                "${it.name}=${it.call(this).toString()}"
-//            }
-//    }
 }

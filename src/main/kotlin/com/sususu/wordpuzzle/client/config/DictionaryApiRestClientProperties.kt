@@ -8,5 +8,5 @@ data class DictionaryApiRestClientProperties(
     val connectionTimeout: Duration,
     val readTimeout: Duration,
     val baseUrl: String,
-//    val apiKey: String
+    val apiKey: String
 )

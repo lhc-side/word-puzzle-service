@@ -1,3 +1,4 @@
-### GET puzzle template
-GET http://localhost:8080/puzzle-template/1
+### GET puzzle
+GET http://localhost:8080/puzzles/1
 Accept: application/json
+

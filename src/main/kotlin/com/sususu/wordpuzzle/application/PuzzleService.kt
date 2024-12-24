@@ -1,19 +1,21 @@
 package com.sususu.wordpuzzle.application
 
-import com.sususu.wordpuzzle.infrastructure.PuzzleTemplate
+import com.sususu.wordpuzzle.infrastructure.Puzzle
+import com.sususu.wordpuzzle.infrastructure.Quiz
+import com.sususu.wordpuzzle.infrastructure.repository.PuzzleRepository
 import com.sususu.wordpuzzle.infrastructure.repository.PuzzleTemplateRepository
+import com.sususu.wordpuzzle.presentation.response.PuzzleResponse
+import com.sususu.wordpuzzle.presentation.response.QuizResponse
 import org.springframework.stereotype.Service
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class PuzzleService(
-    private val puzzleTemplateRepository: PuzzleTemplateRepository
+    private val puzzleTemplateRepository: PuzzleTemplateRepository,
+    private val puzzleRepository: PuzzleRepository
 ) {
-    fun findPuzzleTemplateById(id: Long): PuzzleTemplate? {
-       return puzzleTemplateRepository.findPuzzleTemplateById(id)
-   }
-
     fun createPuzzles(): Array<Array<String>> {
         val template = puzzleTemplateRepository.findAnyTemplate()
         for (i in 0..< template.size) {
@@ -138,5 +140,28 @@ class PuzzleService(
         }
         return WordCounter(pq, i)
     }
-}
 
+    @Transactional(readOnly = true)
+    fun findPuzzle(id: Long): PuzzleResponse {
+        // todo: random key with null situation
+        val puzzleId = if (id == -1L) 1L else id
+
+        return puzzleRepository.findPuzzleById(puzzleId).toResponse()
+    }
+
+    fun Puzzle.toResponse(): PuzzleResponse {
+        return PuzzleResponse(
+            puzzleId = this.id,
+            template = this.puzzleTemplateContents,
+            quizzes = this.quizzes.map { it.toResponse() }
+        )
+    }
+
+    fun Quiz.toResponse(): QuizResponse {
+        return QuizResponse(
+            quizType = this.quizType,
+            quizNo = this.quizNo,
+            quiz = this.wordDescription
+        )
+    }
+}

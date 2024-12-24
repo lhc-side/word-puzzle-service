@@ -57,4 +57,3 @@ create table puzzle_submission
     updated_by varchar(100) not null comment '수정자',
     updated_at timestamp    not null default now() comment '수정시간'
 );
-

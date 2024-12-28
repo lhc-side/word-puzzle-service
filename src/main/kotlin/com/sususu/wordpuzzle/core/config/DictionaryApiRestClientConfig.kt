@@ -1,4 +1,4 @@
-package com.sususu.wordpuzzle.client.config
+package com.sususu.wordpuzzle.core.config
 
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters
 import org.springframework.boot.context.properties.EnableConfigurationProperties
@@ -16,6 +16,7 @@ class DictionaryApiRestClientConfig {
         val queryParam = "key=${properties.apiKey}&start=1&num=100&sort=dict&advanced=y&pos=1&pos=2"
 
         return RestClient.builder()
+            .messageConverters { converters -> converters.add(MappingJackson2XmlHttpMessageConverter()) }
             .baseUrl("${properties.baseUrl}?${queryParam}")
             .build()
     }

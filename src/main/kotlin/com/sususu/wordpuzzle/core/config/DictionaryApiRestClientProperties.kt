@@ -1,4 +1,4 @@
-package com.sususu.wordpuzzle.client.config
+package com.sususu.wordpuzzle.core.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import java.time.Duration

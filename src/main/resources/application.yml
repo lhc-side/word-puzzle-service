@@ -29,3 +29,27 @@ logging:
     org.hibernate.SQL: DEBUG
 
 ---
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://database-word-puzzle-1.cbu6ksamyt4u.ap-northeast-2.rds.amazonaws.com:3306/puzzle?characterEncoding=UTF-8&useSSL=false
+    username: admin
+    password: tmtmtm1!
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 30
+        jdbc.batch_size: 30
+        hibernate.physical_naming_strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+        hbm2ddl:
+          auto: update
+logging:
+  level:
+    org.hibernate.orm.jdbc.bind: TRACE
+    org.hibernate.SQL: DEBUG

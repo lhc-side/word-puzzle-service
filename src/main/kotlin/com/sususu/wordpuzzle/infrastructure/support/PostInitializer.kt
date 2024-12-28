@@ -12,7 +12,8 @@ class PostInitializer(
     override fun run(vararg args: String?) {
         puzzleTemplateRepository.save(
             PuzzleTemplate(
-                contents = "1234"
+                contents = "1234",
+                puzzles = emptyList(),
             )
         )
     }

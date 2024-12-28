@@ -13,7 +13,7 @@
     <logger name="ch.qos.logback" level="WARN"/>
     <logger name="com.sun" level="WARN"/>
 
-    <springProfile name="default">
+    <springProfile name="default,dev">
         <logger name="org.springframework" level="INFO"/>
         <logger name="org.springframework.jdbc.core" level="DEBUG"/>
         <root level="INFO">

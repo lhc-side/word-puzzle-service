@@ -4,21 +4,18 @@ import jakarta.persistence.*
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "word")
-data class Word(
+@Table(name = "puzzle_submission")
+class PuzzleSubmission(
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
-    @Column
-    val word: String,
+    @Column(name = "puzzle_id")
+    val puzzleId: Long,
 
-    @Column
-    val description: String,
-
-    @OneToMany(mappedBy = "word")
-    val quizzes: List<Quiz>,
+    @Column(name = "contents")
+    val contents: String,
 
     @Column(name = "created_by")
     val createdBy: String = "system",

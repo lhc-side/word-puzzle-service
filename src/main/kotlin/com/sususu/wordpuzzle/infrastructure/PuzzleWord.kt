@@ -4,21 +4,20 @@ import jakarta.persistence.*
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "word")
-data class Word(
+@Table(name = "puzzle_word")
+class PuzzleWord(
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
-
-    @Column
-    val word: String,
-
-    @Column
-    val description: String,
-
-    @OneToMany(mappedBy = "word")
-    val quizzes: List<Quiz>,
+    @Column(name = "puzzle_id")
+    val puzzleId: Long,
+    @Column(name = "word_id")
+    val wordId: Long,
+    @Column(name = "quiz_type")
+    val quizType: String,
+    @Column(name = "quiz_no")
+    val quizNo: String,
 
     @Column(name = "created_by")
     val createdBy: String = "system",
@@ -31,4 +30,5 @@ data class Word(
 
     @Column(name = "updated_at")
     val updatedAt: LocalDateTime = LocalDateTime.now(),
-)
+) {
+}

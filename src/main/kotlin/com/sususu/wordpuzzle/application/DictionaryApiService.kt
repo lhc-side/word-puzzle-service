@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component
 import org.springframework.web.client.RestClient
 import org.springframework.web.client.body
 import java.io.IOException
-import kotlin.reflect.full.memberProperties
 
 interface DictionaryApiService {
     fun searchDictionary(searchDictionaryRequest: SearchDictionaryRequest): Channel
@@ -42,11 +41,4 @@ class DictionaryApiServiceImpl(
             throw IllegalArgumentException("DICTIONARY API ERROR: [${error.errorCode}] ${error.message}")
         }
     }
-
-    fun SearchDictionaryRequest.toQueryParam(): String {
-        return this::class.memberProperties
-            .filter { it.call(this) != null }
-            .joinToString("&") { "${it.name}=${it.call(this).toString()}" }
-    }
-
 }

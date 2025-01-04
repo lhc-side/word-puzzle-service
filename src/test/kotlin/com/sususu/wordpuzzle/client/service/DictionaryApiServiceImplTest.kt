@@ -59,10 +59,10 @@ class DictionaryApiServiceImplTest {
             type2 = null,
             level = null,
             multimedia = null,
-            letter_s = null,
-            letter_e = null,
-            sense_cat = null,
-            subject_cat = null,
+            letterS = null,
+            letterE = null,
+            senseCat = null,
+            subjectCat = null,
         )
 
         every { restClient.get().uri(any<String>()).accept(any()).retrieve().body<String>() } returns body
@@ -88,10 +88,10 @@ class DictionaryApiServiceImplTest {
             type2 = null,
             level = null,
             multimedia = null,
-            letter_s = null,
-            letter_e = null,
-            sense_cat = null,
-            subject_cat = null,
+            letterS = null,
+            letterE = null,
+            senseCat = null,
+            subjectCat = null,
         )
 
         every { restClient.get().uri(any<String>()).accept(any()).retrieve().body<String>() } returns body
@@ -119,10 +119,10 @@ class DictionaryApiServiceImplTest {
             type2 = null,
             level = null,
             multimedia = null,
-            letter_s = null,
-            letter_e = null,
-            sense_cat = null,
-            subject_cat = null,
+            letterS = null,
+            letterE = null,
+            senseCat = null,
+            subjectCat = null,
         )
 
         every { restClient.get().uri(any<String>()).accept(any()).retrieve().body<String>() } returns body

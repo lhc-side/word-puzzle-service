@@ -8,6 +8,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      DICTIONARY_API_KEY: ${{ secrets.DICTIONARY_API_KEY }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3

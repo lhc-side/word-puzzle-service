@@ -36,22 +36,17 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew build
-      
-      - name: Upload JAR to EC2
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          username: ec2-user
-          host: ${{ secrets.EC2_PUBLIC_IP }}
-          key: ${{ secrets.EC2_PRIVATE_KEY }}
-          source: build/libs/word-puzzle.jar
-          target: /home/ec2-user/${{ env.CURRENT_DATE }}
 
-      - name: Restart Spring Boot Application
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          username: ec2-user
-          host: ${{ secrets.EC2_PUBLIC_IP }}
-          key: ${{ secrets.EC2_PRIVATE_KEY }}
-          script: |
-            kill -9 $(lsof -i:8080 -t)
-            nohup java -jar /home/ec2-user/${{ env.CURRENT_DATE }}/build/libs/word-puzzle.jar > /home/ec2-user/${{ env.CURRENT_DATE }}/wordpuzzle.log &
+      - name: Deploy to EC2
+        env:
+          KEY_FILE: key.pem
+          EC2_INSTANCE: ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_PUBLIC_IP }}
+          SOURCE_DIR: build/libs/word-puzzle.jar
+          LIB_DIR: /home/${{ secrets.EC2_USERNAME }}/libs/word-puzzle-${{ env.CURRENT_DATE }}.jar
+          LOG_DIR: /home/${{ secrets.EC2_USERNAME }}/logs/word-puzzle-${{ env.CURRENT_DATE }}.log
+        run: |
+          echo "${{ secrets.EC2_PRIVATE_KEY }}" > $KEY_FILE
+          chmod 600 $KEY_FILE
+          scp -i $KEY_FILE -o StrictHostKeyChecking=no $SOURCE_DIR $EC2_INSTANCE:$LIB_DIR
+          ssh -i $KEY_FILE -o StrictHostKeyChecking=no $EC2_INSTANCE "pgrep java | xargs kill -9; nohup java -jar $LIB_DIR > $LOG_DIR 2>&1 &"
+          rm -f $KEY_FILE
